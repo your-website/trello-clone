@@ -13,29 +13,37 @@ export default new Vuex.Store({
     board
   },
   mutations: {
-    CREATE_TASK(state, { tasks, name }) {
+    CREATE_TASK (state, { tasks, name }) {
       tasks.push({
         name,
         id: uuid(),
         description: ''
       })
     },
-    UPDATE_TASK(state, { task, key, value }) {
+    UPDATE_TASK (state, { task, key, value }) {
       task[key] = value
       // Vue.set(task, key, value)
     },
-    MOVE_TASK(state, { fromTasks, toTasks, fromTaskIndex, toTaskIndex }) {
+    MOVE_TASK (state, { fromTasks, toTasks, fromTaskIndex, toTaskIndex }) {
       const taskToMove = fromTasks.splice(fromTaskIndex, 1)[0]
       toTasks.splice(toTaskIndex, 0, taskToMove)
     },
-    MOVE_COLUMN(state, { fromColumnIndex, toColumnIndex }) {
+    MOVE_COLUMN (state, { fromColumnIndex, toColumnIndex }) {
       const columnList = state.board.columns
       const columnToMove = columnList.splice(fromColumnIndex, 1)[0]
       columnList.splice(toColumnIndex, 0, columnToMove)
+    },
+    CREATE_COLUMN (state, titleNewColumn) {
+      const newColumn =
+      {
+        name: titleNewColumn,
+        tasks: []
+      }
+      state.board.columns.push(newColumn)
     }
   },
   getters: {
-    getTask(state) {
+    getTask (state) {
       return (id) => {
         for (const column of state.board.columns) {
           for (const task of column.tasks) {

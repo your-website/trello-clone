@@ -1,6 +1,15 @@
 <template>
   <div class="board">
-    <div class="flex flex-row items-start">
+    <div class="column flex w-1">
+        <input
+            type="text"
+            class="p-2 w-full"
+            placeholder="+ Enter new column"
+            v-model="newColumnName"
+            @keyup.enter="createColumn"
+          />
+      </div>
+    <div class="flex flex-row items-start mt-3">
       <div
         class="column"
         v-for="(column, $columnIndex) of board.columns"
@@ -13,6 +22,7 @@
       >
         <div class="flex items-center mb-2 font-bold">
           {{ column.name }}
+
         </div>
         <div class="list-reset">
           <div
@@ -42,6 +52,7 @@
           />
         </div>
       </div>
+      
     </div>
 
     <div class="task-bg" v-if="isTaskOpen" @click.self="closeTask">
@@ -53,6 +64,11 @@
 <script>
 import { mapState } from "vuex";
 export default {
+  data () {
+    return {
+      newColumnName: ''
+    }
+  },
   computed: {
     ...mapState(["board"]),
     isTaskOpen () {
@@ -112,6 +128,10 @@ export default {
       const fromColumnIndex = e.dataTransfer.getData("from-column-index");
 
       this.$store.commit('MOVE_COLUMN', { fromColumnIndex, toColumnIndex })
+    },
+    createColumn () {
+      this.$store.commit('CREATE_COLUMN', this.newColumnName)
+      this.newColumnName = ''
     }
   }
 }
