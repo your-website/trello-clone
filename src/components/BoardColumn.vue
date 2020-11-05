@@ -9,7 +9,15 @@
       }"
     >
       <div class="flex items-center justify-between mb-2 font-bold">
-        {{ column.name }}
+        <div :style="{ color }">
+          {{ column.name }}
+          <input
+            @change="pickColorText"
+            class="input-color"
+            type="color"
+            :value="color"
+          />
+        </div>
 
         <input
           @change="pickColorColumn"
@@ -29,6 +37,7 @@
           :board="board"
         />
         <input
+          :style="{ color }"
           type="text"
           class="block p-2 w-full bg-transparent"
           placeholder="+ Enter new task"
@@ -52,6 +61,10 @@ export default {
       bgc: {
         type: String,
         default: ''
+      },
+      color: {
+        type: String,
+        default: ''
       }
     }
   },
@@ -70,6 +83,9 @@ export default {
     },
     pickColorColumn(e) {
       this.bgc = e.target.value
+    },
+    pickColorText(e) {
+      this.color = e.target.value
     }
   }
 }
