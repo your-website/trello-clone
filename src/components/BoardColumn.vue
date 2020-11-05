@@ -2,13 +2,21 @@
   <AppDrop @drop="moveTaskOrColumn">
     <AppDrag
       class="column"
+      :style="{ backgroundColor: bgc }"
       :transferData="{
         type: 'column',
         fromColumnIndex: columnIndex
       }"
     >
-      <div class="flex items-center mb-2 font-bold">
+      <div class="flex items-center justify-between mb-2 font-bold">
         {{ column.name }}
+
+        <input
+          @change="pickColorColumn"
+          class="input-color"
+          type="color"
+          :value="bgc"
+        />
       </div>
       <div class="list-reset">
         <ColumnTask
@@ -26,7 +34,6 @@
           placeholder="+ Enter new task"
           @keyup.enter="createTask($event, column.tasks)"
         />
-        <BaseTrash />
       </div>
     </AppDrag>
   </AppDrop>
@@ -40,6 +47,14 @@ import movingTasksAndColumnsMixin from '../mixins/movingTasksAndColumnsMixin.js'
 
 export default {
   mixins: [movingTasksAndColumnsMixin],
+  data() {
+    return {
+      bgc: {
+        type: String,
+        default: ''
+      }
+    }
+  },
   components: {
     ColumnTask,
     AppDrag,
@@ -52,6 +67,9 @@ export default {
         name: e.target.value
       })
       e.target.value = ''
+    },
+    pickColorColumn(e) {
+      this.bgc = e.target.value
     }
   }
 }
@@ -62,9 +80,7 @@ export default {
   @apply bg-grey-light p-2 mr-4 text-left shadow rounded;
   min-width: 350px;
 }
-.fas {
-  width: 20px;
-  height: 20px;
-  font-size: 25px;
+.input-color {
+  @apply bg-grey-light rounded;
 }
 </style>

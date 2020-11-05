@@ -49,10 +49,14 @@ export default {
       this.$router.push({ name: 'task', params: { id: task.id } })
     },
     removeTask(task) {
-      this.$store.commit('REMOVE_TASK', {
-        key: this.taskIndex,
-        columnIndex: this.columnIndex
-      })
+      let isBoss = confirm("Are you sure ?");
+
+      if (isBoss) {
+        this.$store.commit('REMOVE_TASK', {
+          key: this.taskIndex,
+          columnIndex: this.columnIndex
+        })
+      }
     }
   }
 }
