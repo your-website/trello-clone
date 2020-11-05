@@ -26,6 +26,7 @@
           placeholder="+ Enter new task"
           @keyup.enter="createTask($event, column.tasks)"
         />
+        <BaseTrash />
       </div>
     </AppDrag>
   </AppDrop>
@@ -35,7 +36,6 @@
 import ColumnTask from '../components/ColumnTask.vue'
 import AppDrag from './AppDrag'
 import AppDrop from './AppDrop'
-
 import movingTasksAndColumnsMixin from '../mixins/movingTasksAndColumnsMixin.js'
 
 export default {
@@ -61,5 +61,10 @@ export default {
 .column {
   @apply bg-grey-light p-2 mr-4 text-left shadow rounded;
   min-width: 350px;
+}
+.fas {
+  width: 20px;
+  height: 20px;
+  font-size: 25px;
 }
 </style>

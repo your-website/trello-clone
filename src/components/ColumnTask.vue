@@ -7,9 +7,12 @@
         fromColumnIndex: columnIndex,
         fromTaskIndex: taskIndex
       }"
-      @click="goToTask(task)"
+      @click.native="goToTask(task)"
     >
-      <span class="w-full flex-no-shrink font-bold">{{ task.name }}</span>
+      <div class="flex w-full justify-between items-center">
+        <span class="font-bold">{{ task.name }}</span>
+        <BaseTrash @click.stop="removeTask(task)" />
+      </div>
       <p v-if="task.description" class="w-full flex-no-shrink mt-1 text-sm">
         {{ task.description }}
       </p>
@@ -20,13 +23,15 @@
 <script>
 import AppDrag from './AppDrag'
 import AppDrop from './AppDrop'
+import BaseTrash from './Icons/BaseTrash'
 
 import movingTasksAndColumnsMixin from '../mixins/movingTasksAndColumnsMixin.js'
 
 export default {
   components: {
     AppDrag,
-    AppDrop
+    AppDrop,
+    BaseTrash
   },
   mixins: [movingTasksAndColumnsMixin],
   props: {
@@ -42,6 +47,12 @@ export default {
   methods: {
     goToTask(task) {
       this.$router.push({ name: 'task', params: { id: task.id } })
+    },
+    removeTask(task) {
+      this.$store.commit('REMOVE_TASK', {
+        key: this.taskIndex,
+        columnIndex: this.columnIndex
+      })
     }
   }
 }
