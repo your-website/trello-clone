@@ -42,6 +42,12 @@ export default new Vuex.Store({
         tasks: []
       }
       state.board.columns.push(newColumn)
+    },
+    CHANGE_STYLE_COLUMN(state, { columnIndex, backgroundColor, color }) {
+      state.board.columns[columnIndex].style = {
+        backgroundColor,
+        color
+      }
     }
   },
   getters: {
@@ -55,6 +61,27 @@ export default new Vuex.Store({
           }
         }
       }
+    }
+  },
+  actions: {
+    changeBgcAndColor(
+      { commit, state },
+      { columnIndex, backgroundColor, color }
+    ) {
+      let bgc =
+        backgroundColor === undefined
+          ? state.board.columns[columnIndex].style.backgroundColor
+          : backgroundColor
+      let colorText =
+        color === undefined
+          ? state.board.columns[columnIndex].style.color
+          : color
+
+      commit('CHANGE_STYLE_COLUMN', {
+        columnIndex,
+        backgroundColor: bgc,
+        color: colorText
+      })
     }
   }
 })

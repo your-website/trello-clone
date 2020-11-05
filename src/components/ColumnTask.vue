@@ -10,12 +10,18 @@
       @click.native="goToTask(task)"
     >
       <div class="flex w-full justify-between items-center">
-        <span class="font-bold">{{ task.name }}</span>
-        <BaseTrash @click.stop="removeTask(task)" />
+        <div class="flex-col w-full">
+          <span class="font-bold">{{ task.name }}</span>
+          <p v-if="task.description" class="w-full flex-no-shrink mt-3 text-sm">
+            {{ task.description }}
+          </p>
+        </div>
+
+        <div class="flex-col">
+          <BaseTrash @click.stop="removeTask(task)" />
+          <BaseExclamation />
+        </div>
       </div>
-      <p v-if="task.description" class="w-full flex-no-shrink mt-1 text-sm">
-        {{ task.description }}
-      </p>
     </AppDrag>
   </AppDrop>
 </template>
@@ -24,6 +30,7 @@
 import AppDrag from './AppDrag'
 import AppDrop from './AppDrop'
 import BaseTrash from './Icons/BaseTrash'
+import BaseExclamation from './Icons/BaseExclamation.vue'
 
 import movingTasksAndColumnsMixin from '../mixins/movingTasksAndColumnsMixin.js'
 
@@ -31,7 +38,8 @@ export default {
   components: {
     AppDrag,
     AppDrop,
-    BaseTrash
+    BaseTrash,
+    BaseExclamation
   },
   mixins: [movingTasksAndColumnsMixin],
   props: {
@@ -49,7 +57,7 @@ export default {
       this.$router.push({ name: 'task', params: { id: task.id } })
     },
     removeTask(task) {
-      let isBoss = confirm("Are you sure ?");
+      let isBoss = confirm('Are you sure ?')
 
       if (isBoss) {
         this.$store.commit('REMOVE_TASK', {

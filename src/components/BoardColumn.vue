@@ -1,29 +1,29 @@
 <template>
   <AppDrop @drop="moveTaskOrColumn">
     <AppDrag
+      :style="{ backgroundColor: column.style.backgroundColor }"
       class="column"
-      :style="{ backgroundColor: bgc }"
       :transferData="{
         type: 'column',
         fromColumnIndex: columnIndex
       }"
     >
       <div class="flex items-center justify-between mb-2 font-bold">
-        <div :style="{ color }">
+        <div :style="{ color: column.style.color }">
           {{ column.name }}
           <input
+            :value="column.style.color"
             @change="pickColorText"
             class="input-color"
             type="color"
-            :value="color"
           />
         </div>
 
         <input
+          :value="column.style.backgroundColor"
           @change="pickColorColumn"
           class="input-color"
           type="color"
-          :value="bgc"
         />
       </div>
       <div class="list-reset">
@@ -37,7 +37,7 @@
           :board="board"
         />
         <input
-          :style="{ color }"
+          :style="{ color: column.style.color }"
           type="text"
           class="block p-2 w-full bg-transparent"
           placeholder="+ Enter new task"
@@ -56,18 +56,6 @@ import movingTasksAndColumnsMixin from '../mixins/movingTasksAndColumnsMixin.js'
 
 export default {
   mixins: [movingTasksAndColumnsMixin],
-  data() {
-    return {
-      bgc: {
-        type: String,
-        default: ''
-      },
-      color: {
-        type: String,
-        default: ''
-      }
-    }
-  },
   components: {
     ColumnTask,
     AppDrag,
@@ -80,12 +68,21 @@ export default {
         name: e.target.value
       })
       e.target.value = ''
+      console.log(this.column.style.backgroundColor)
     },
     pickColorColumn(e) {
-      this.bgc = e.target.value
+      const backgroundColor = e.target.value
+      this.$store.dispatch('changeBgcAndColor', {
+        columnIndex: this.columnIndex,
+        backgroundColor
+      })
     },
     pickColorText(e) {
-      this.color = e.target.value
+      const color = e.target.value
+      this.$store.dispatch('changeBgcAndColor', {
+        columnIndex: this.columnIndex,
+        color
+      })
     }
   }
 }

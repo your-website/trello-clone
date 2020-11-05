@@ -24,7 +24,11 @@ export default {
           id: uuid(),
           userAssigned: null
         }
-      ]
+      ],
+      style: {
+        backgroundColor: '#dae1e7',
+        color: '#000'
+      }
     },
     {
       name: 'in-progress',
@@ -35,7 +39,11 @@ export default {
           id: uuid(),
           userAssigned: null
         }
-      ]
+      ],
+      style: {
+        backgroundColor: '#dae1e7',
+        color: '#000'
+      }
     },
     {
       name: 'done',
@@ -46,7 +54,11 @@ export default {
           id: uuid(),
           userAssigned: null
         }
-      ]
+      ],
+      style: {
+        backgroundColor: '#dae1e7',
+        color: '#000'
+      }
     }
   ]
 }
