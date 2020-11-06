@@ -40,7 +40,11 @@ export default new Vuex.Store({
     CREATE_COLUMN(state, titleNewColumn) {
       const newColumn = {
         name: titleNewColumn,
-        tasks: []
+        tasks: [],
+        style: {
+          backgroundColor: '#dae1e7',
+          color: '#000000'
+        }
       }
       state.board.columns.push(newColumn)
     },
