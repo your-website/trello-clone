@@ -8,24 +8,9 @@
         fromColumnIndex: columnIndex
       }"
     >
-      <BaseDelete class="deleteIcon" @click="removeColumn(columnIndex)" />
       <div class="flex items-center justify-between mb-2 font-bold">
-        <div :style="{ color: column.style.color }">
-          {{ column.name }}
-          <input
-            :value="column.style.color"
-            @change="pickColorText"
-            class="input-color"
-            type="color"
-          />
-        </div>
-
-        <input
-          :value="column.style.backgroundColor"
-          @change="pickColorColumn"
-          class="input-color"
-          type="color"
-        />
+        {{ column.name }}
+        <BaseView class="view-list" @click="goToEditColumn(columnIndex)" />
       </div>
       <div class="list-reset">
         <ColumnTask
@@ -45,6 +30,10 @@
           @keyup.enter="createTask($event, column.tasks)"
         />
       </div>
+
+      <div class="task-bg" v-if="isEditOpen" @click.self="closeTask">
+        <router-view />
+      </div>
     </AppDrag>
   </AppDrop>
 </template>
@@ -53,7 +42,7 @@
 import ColumnTask from '../components/ColumnTask.vue'
 import AppDrag from './AppDrag'
 import AppDrop from './AppDrop'
-import BaseDelete from '../components/Icons/BaseDelete'
+import BaseView from '../components/Icons/BaseView'
 import movingTasksAndColumnsMixin from '../mixins/movingTasksAndColumnsMixin.js'
 
 export default {
@@ -62,7 +51,14 @@ export default {
     ColumnTask,
     AppDrag,
     AppDrop,
-    BaseDelete
+    BaseView
+  },
+  computed: {
+    isEditOpen() {
+      if (this.$route.name === 'edit' && this.$route.params.id === this.columnIndex) {
+        return true
+      } else return false
+    }
   },
   methods: {
     createTask(e, tasks) {
@@ -93,7 +89,13 @@ export default {
       if (remove) {
         this.$store.commit('REMOVE_COLUMN', { columnIndex })
       }
-    }
+    },
+    goToEditColumn(columnIndex) {
+      this.$router.push({ name: 'edit', params: { id: columnIndex } })
+    },
+    closeTask () {
+      this.$router.push({ name: 'board' })
+    },
   }
 }
 </script>
@@ -105,13 +107,5 @@ export default {
 }
 .input-color {
   @apply bg-grey-light rounded;
-}
-.deleteIcon {
-  position: absolute;
-  top: -24px;
-  right: -4px;
-}
-.deleteIcon:hover {
-  fill: rgb(85, 83, 83);
 }
 </style>

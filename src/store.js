@@ -77,6 +77,11 @@ export default new Vuex.Store({
       return (taskIndex, columnIndex) => {
         return state.board.columns[columnIndex].tasks[taskIndex].priority
       }
+    },
+    getColumn(state) {
+      return columnIndex => {
+        return state.board.columns[columnIndex]
+      }
     }
   },
   actions: {

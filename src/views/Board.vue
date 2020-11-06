@@ -9,7 +9,7 @@
         @keyup.enter="createColumn"
       />
     </div>
-    <div class="flex flex-row items-start mt-3">
+    <div class="absolute flex flex-row items-start mt-3">
       <BoardColumn
         v-for="(column, $columnIndex) of board.columns"
         :key="$columnIndex"
