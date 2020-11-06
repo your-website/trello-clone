@@ -2,12 +2,13 @@
   <AppDrop @drop="moveTaskOrColumn">
     <AppDrag
       :style="{ backgroundColor: column.style.backgroundColor }"
-      class="column"
+      class="column relative mt-4"
       :transferData="{
         type: 'column',
         fromColumnIndex: columnIndex
       }"
     >
+      <BaseDelete class="deleteIcon" @click="removeColumn(columnIndex)" />
       <div class="flex items-center justify-between mb-2 font-bold">
         <div :style="{ color: column.style.color }">
           {{ column.name }}
@@ -52,6 +53,7 @@
 import ColumnTask from '../components/ColumnTask.vue'
 import AppDrag from './AppDrag'
 import AppDrop from './AppDrop'
+import BaseDelete from '../components/Icons/BaseDelete'
 import movingTasksAndColumnsMixin from '../mixins/movingTasksAndColumnsMixin.js'
 
 export default {
@@ -59,7 +61,8 @@ export default {
   components: {
     ColumnTask,
     AppDrag,
-    AppDrop
+    AppDrop,
+    BaseDelete
   },
   methods: {
     createTask(e, tasks) {
@@ -83,6 +86,13 @@ export default {
         columnIndex: this.columnIndex,
         color
       })
+    },
+    removeColumn(columnIndex) {
+      let remove = confirm('Are you sure ?')
+
+      if (remove) {
+        this.$store.commit('REMOVE_COLUMN', { columnIndex })
+      }
     }
   }
 }
@@ -95,5 +105,13 @@ export default {
 }
 .input-color {
   @apply bg-grey-light rounded;
+}
+.deleteIcon {
+  position: absolute;
+  top: -24px;
+  right: -4px;
+}
+.deleteIcon:hover {
+  fill: rgb(85, 83, 83);
 }
 </style>

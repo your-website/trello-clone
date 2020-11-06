@@ -1,5 +1,6 @@
 <template>
   <svg
+    v-on="$listeners"
     class="delete"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
@@ -18,10 +19,11 @@ export default {}
 </script>
 
 <style lang="css" scoped>
-.asd {
-  fill: red;
+.delete {
   height: 25px;
   width: 25px;
   cursor: pointer;
+
+  transition: fill 0.2s linear;
 }
 </style>

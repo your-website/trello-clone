@@ -48,6 +48,9 @@ export default new Vuex.Store({
       }
       state.board.columns.push(newColumn)
     },
+    REMOVE_COLUMN(state, { columnIndex }) {
+      state.board.columns.splice(columnIndex, 1)
+    },
     CHANGE_STYLE_COLUMN(state, { columnIndex, backgroundColor, color }) {
       state.board.columns[columnIndex].style = {
         backgroundColor,
