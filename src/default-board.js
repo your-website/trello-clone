@@ -10,24 +10,27 @@ export default {
           description: 'description',
           name: 'first task',
           id: uuid(),
-          userAssigned: null
+          userAssigned: null,
+          priority: false
         },
         {
           description: 'description',
           name: 'second task',
           id: uuid(),
-          userAssigned: null
+          userAssigned: null,
+          priority: false
         },
         {
           description: 'description',
           name: 'and thrid',
           id: uuid(),
-          userAssigned: null
+          userAssigned: null,
+          priority: false
         }
       ],
       style: {
         backgroundColor: '#dae1e7',
-        color: '#000'
+        color: '#000000'
       }
     },
     {
@@ -37,12 +40,13 @@ export default {
           description: '',
           name: 'first task',
           id: uuid(),
-          userAssigned: null
+          userAssigned: null,
+          priority: false
         }
       ],
       style: {
         backgroundColor: '#dae1e7',
-        color: '#000'
+        color: '#000000'
       }
     },
     {
@@ -52,12 +56,13 @@ export default {
           description: '',
           name: 'first task',
           id: uuid(),
-          userAssigned: null
+          userAssigned: null,
+          priority: false
         }
       ],
       style: {
         backgroundColor: '#dae1e7',
-        color: '#000'
+        color: '#000000'
       }
     }
   ]

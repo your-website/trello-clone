@@ -17,7 +17,8 @@ export default new Vuex.Store({
       tasks.push({
         name,
         id: uuid(),
-        description: ''
+        description: '',
+        priority: false
       })
     },
     UPDATE_TASK(state, { task, key, value }) {
@@ -48,6 +49,9 @@ export default new Vuex.Store({
         backgroundColor,
         color
       }
+    },
+    CHANGE_PRIORITY_TASK(state, { task, priority }) {
+      task.priority = priority
     }
   },
   getters: {
@@ -60,6 +64,11 @@ export default new Vuex.Store({
             }
           }
         }
+      }
+    },
+    getTaskPriority(state) {
+      return (taskIndex, columnIndex) => {
+        return state.board.columns[columnIndex].tasks[taskIndex].priority
       }
     }
   },

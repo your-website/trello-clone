@@ -19,7 +19,11 @@
 
         <div class="flex-col">
           <BaseTrash @click.stop="removeTask(task)" />
-          <BaseExclamation />
+          <BaseExclamation
+            class="exclamation"
+            :style="{ fill: taskPriority ? 'green' : 'gray' }"
+            @click.stop="changePriorityTask"
+          />
         </div>
       </div>
     </AppDrag>
@@ -33,6 +37,7 @@ import BaseTrash from './Icons/BaseTrash'
 import BaseExclamation from './Icons/BaseExclamation.vue'
 
 import movingTasksAndColumnsMixin from '../mixins/movingTasksAndColumnsMixin.js'
+import { mapGetters } from 'vuex'
 
 export default {
   components: {
@@ -42,6 +47,12 @@ export default {
     BaseExclamation
   },
   mixins: [movingTasksAndColumnsMixin],
+  computed: {
+    ...mapGetters(['getTaskPriority']),
+    taskPriority() {
+      return this.getTaskPriority(this.taskIndex, this.columnIndex)
+    }
+  },
   props: {
     task: {
       type: Object,
@@ -65,6 +76,19 @@ export default {
           columnIndex: this.columnIndex
         })
       }
+    },
+    hoverColorExclamation(e) {
+      e.target.style.fill = this.task.priority ? 'gray' : 'green'
+    },
+    basedColorExclamation(e) {
+      e.target.style.fill = this.task.priority ? 'red' : 'gray'
+    },
+    changePriorityTask() {
+      const task = this.task
+      this.$store.commit('CHANGE_PRIORITY_TASK', {
+        task,
+        priority: !task.priority
+      })
     }
   }
 }
